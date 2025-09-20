@@ -15,11 +15,12 @@ class AVLTree:
     def insert_key(self, key:int):
         self.root = self.insert(self.root, key)
 
-    def min_value(self) -> int:
+    def min_value(self):
         if self.root is None:
             print("Дерево порожнє")
+            return None
 
-        return self.search_min_value(self.root.left)
+        return self.search_min_value(self.root)
 
 
     def search_min_value(self, node: Node) -> int:
@@ -28,8 +29,46 @@ class AVLTree:
 
         return self.search_min_value(node.left)
 
+    def sum_values(self):
+        values = []
+        if self.root is None:
+            print("Дерево порожнє")
+            return None
+
+        self.search_elements(self.root, values)
+        return sum(values)
+
+    def search_elements(self, node: Node, lst: list):
+        if node is None:
+            return
+
+        self.search_elements(node.left, lst)
+        lst.append(node.key)
+        self.search_elements(node.right, lst)
+
+    def search_left(self, node: Node, lst: list):
+        if node is None:
+            return
+
+        if node.left is None or node.right is None:
+            lst.append(node.key)
+            return
 
 
+        self.search_left(node.left, lst)
+        #lst.append(node.key)
+        self.search_right(node.right, lst)
+        #lst.append(node.key)
+
+    def search_right(self, node: Node, lst: list):
+        if node is None:
+            return
+        if node.right is None:
+            lst.append(node.key)
+            return
+
+        self.search_right(node.right, lst)
+        lst.append(node.key)
 
 
     def insert(self, node: Node, key: int) -> Node:
@@ -139,7 +178,8 @@ tree.insert_key(35)
 tree.insert_key(15)
 tree.print_tree()
 
-print(tree.min_value())
+print(f"Мінімальне значення в дереві по лівій гілці: {tree.min_value()}")
+print(f"Сумма всіх значень в дереві {tree.sum_values()}")
 
 
 
