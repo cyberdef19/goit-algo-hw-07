@@ -14,7 +14,7 @@ class AVLTree:
 
     def insert_key(self, key:int):
         self.root = self.insert(self.root, key)
-
+    #Знайдемо мінімальне значення
     def min_value(self):
         if self.root is None:
             print("Дерево порожнє")
@@ -22,13 +22,16 @@ class AVLTree:
 
         return self.search_min_value(self.root)
 
-
+    #Мінімальне значення у AVL дереві розміщується у листі по лівій гілціна самому кінці лівого піддерева
+    #Тому можемо застосувати рекурсію для пошуку найнижчого у лівому піддереві від кореня листа
     def search_min_value(self, node: Node) -> int:
         if node.left is None:
             return node.key
 
         return self.search_min_value(node.left)
-
+    #Щоб порахувати суму значень у дереві по кожній ноді
+    #також виконаємо рекурсію по усьому дереву, як по правій так і по лівій гілках
+    #Повернемо власне суму значень
     def sum_values(self):
         values = []
         if self.root is None:
@@ -37,6 +40,9 @@ class AVLTree:
 
         self.search_elements(self.root, values)
         return sum(values)
+
+    #Власне рекурсивний пошук елементів по правій та по лівій гілках
+    #Збираємо їх у список
 
     def search_elements(self, node: Node, lst: list):
         if node is None:
@@ -56,9 +62,7 @@ class AVLTree:
 
 
         self.search_left(node.left, lst)
-        #lst.append(node.key)
         self.search_right(node.right, lst)
-        #lst.append(node.key)
 
     def search_right(self, node: Node, lst: list):
         if node is None:
