@@ -15,6 +15,23 @@ class AVLTree:
     def insert_key(self, key:int):
         self.root = self.insert(self.root, key)
 
+    def min_value(self) -> int:
+        if self.root is None:
+            print("Дерево порожнє")
+
+        return self.search_min_value(self.root.left)
+
+
+    def search_min_value(self, node: Node) -> int:
+        if node.left is None:
+            return node.key
+
+        return self.search_min_value(node.left)
+
+
+
+
+
     def insert(self, node: Node, key: int) -> Node:
 
         if node is None:
@@ -55,7 +72,7 @@ class AVLTree:
         return node
 
     def get_height(self, node: Node) -> int:
-        return node.parent.height if node else 0
+        return node.height if node else 0
 
     def get_balance(self, node: Node):
         return self.get_height(node.right) - self.get_height(node.left)
@@ -116,7 +133,13 @@ tree.insert_key(30)
 tree.insert_key(70)
 tree.insert_key(20)
 tree.insert_key(40)
+tree.insert_key(60)
+tree.insert_key(90)
+tree.insert_key(35)
+tree.insert_key(15)
 tree.print_tree()
+
+print(tree.min_value())
 
 
 
